@@ -15,4 +15,6 @@ python-multipart
 psycopg2-binary
 boto3
 python-jose[cryptography]
-passlib[bcrypt]
+passlib
+bcrypt==4.0.1
+email-validator

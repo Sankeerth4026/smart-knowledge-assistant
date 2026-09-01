@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Roboto Mono", monospace;
+
+  /* Industrial Skeuomorphic Palette */
+  --color-chassis: #e0e5ec;
+  --color-panel: #f0f2f5;
+  --color-recessed: #d1d9e6;
+  --color-text-primary: #2d3436;
+  --color-text-secondary: #4a5568;
+  --color-accent: #ff4757; /* Safety Red/Orange */
+  --color-accent-hover: #ff2a3a;
+  --color-accent-glow: rgba(255, 71, 87, 0.4);
+  --color-shadow-dark: #babecc;
+  --color-shadow-light: #ffffff;
+  --color-border-dark: #a3b1c6;
+}
+
+/* ═══════════════════════════════════════════
+   BASE LAYER
+   ═══════════════════════════════════════════ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-chassis);
+    color: var(--color-text-primary);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-chassis);
+    color: var(--color-text-primary);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: 
+      radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 0),
+      radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0);
+    background-size: 8px 8px;
+    background-position: 0 0, 4px 4px;
+  }
+
+  /* Physical Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-recessed);
+    box-shadow: inset 2px 2px 4px var(--color-shadow-dark), inset -2px -2px 4px var(--color-shadow-light);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-chassis);
+    border: 2px solid var(--color-recessed);
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px var(--color-shadow-dark), -2px -2px 4px var(--color-shadow-light);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-panel);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   COMPONENTS LAYER
+   ═══════════════════════════════════════════ */
+@layer components {
+  /* Micro-Texture Noise Overlay */
+  .noise-texture {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.015;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3联%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* Level +1: Elevated Machine Panel */
+  .chassis-panel {
+    background-color: var(--color-chassis);
+    box-shadow: 6px 6px 12px var(--color-shadow-dark), -6px -6px 12px var(--color-shadow-light);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    position: relative;
+  }
+
+  /* Level -1: Sunken Machined Grooves / Wells */
+  .well-recessed {
+    background-color: var(--color-recessed);
+    box-shadow: inset 4px 4px 8px var(--color-shadow-dark), inset -4px -4px 8px var(--color-shadow-light);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+  }
+
+  /* Physical Hardware Switches / Keys */
+  .chassis-btn {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    background-color: var(--color-chassis);
+    color: var(--color-text-primary);
+    box-shadow: 4px 4px 8px var(--color-shadow-dark), -4px -4px 8px var(--color-shadow-light);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+    cursor: pointer;
+  }
+  .chassis-btn:hover:not(:disabled) {
+    background-color: var(--color-panel);
+  }
+  .chassis-btn:active:not(:disabled) {
+    transform: translateY(2px);
+    box-shadow: inset 4px 4px 8px var(--color-shadow-dark), inset -4px -4px 8px var(--color-shadow-light);
+  }
+  .chassis-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: inset 1px 1px 2px var(--color-shadow-dark);
+  }
+
+  /* Safety Active Trigger Switch */
+  .chassis-btn-active {
+    background-color: var(--color-accent);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 4px 4px 8px rgba(186, 40, 50, 0.35), -4px -4px 8px var(--color-shadow-light);
+  }
+  .chassis-btn-active:hover:not(:disabled) {
+    background-color: var(--color-accent-hover);
+  }
+  .chassis-btn-active:active:not(:disabled) {
+    box-shadow: inset 4px 4px 8px rgba(100, 10, 15, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
+  }
+
+  /* Machined Keyboard Key (Subtle gray buttons) */
+  .key-secondary {
+    background-color: #d8dee8;
+    color: var(--color-text-secondary);
+    border-color: rgba(255,255,255,0.4);
+    box-shadow: 2px 2px 4px var(--color-shadow-dark), -2px -2px 4px var(--color-shadow-light);
+  }
+  .key-secondary:active {
+    box-shadow: inset 2px 2px 4px var(--color-shadow-dark), inset -2px -2px 4px var(--color-shadow-light);
+  }
+
+  /* Sunken Machined Inputs */
+  .chassis-input {
+    background-color: var(--color-recessed);
+    color: var(--color-text-primary);
+    box-shadow: inset 3px 3px 6px var(--color-shadow-dark), inset -3px -3px 6px var(--color-shadow-light);
+    border: none;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    outline: none;
+    transition: box-shadow 0.2s ease;
+  }
+  .chassis-input:focus {
+    box-shadow: 
+      inset 3px 3px 6px var(--color-shadow-dark), 
+      inset -3px -3px 6px var(--color-shadow-light),
+      0 0 0 2px var(--color-accent-glow);
+  }
+
+  /* Monospace Hardware Labels & Diagnostics */
+  .telemetry-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-secondary);
+  }
+
+  .telemetry-value {
+    font-family: var(--font-mono);
+    color: var(--color-text-primary);
+  }
+
+  /* Machined Vent Slots */
+  .vent-slots {
+    display: flex;
+    gap: 3px;
+  }
+  .vent-slots span {
+    width: 2px;
+    height: 16px;
+    background-color: var(--color-recessed);
+    box-shadow: inset 1px 1px 1px var(--color-shadow-dark);
+    border-radius: 9999px;
+  }
+
+  /* Corner Bolt/Screw Head */
+  .screw-head {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--color-shadow-light) 10%, var(--color-border-dark) 60%, var(--color-text-primary) 100%);
+    box-shadow: 1px 1px 2px var(--color-shadow-dark), inset 0.5px 0.5px 0.5px var(--color-shadow-light);
+    position: relative;
+  }
+  .screw-head::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 5px;
+    height: 1px;
+    background-color: var(--color-text-primary);
+    opacity: 0.8;
+  }
+
+  /* Hardware status LEDs */
+  .led-lamp {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-border-dark);
+    background-color: #94a3b8;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.3);
+    transition: background-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .led-green-active {
+    background-color: #22c55e;
+    box-shadow: 0 0 8px 1px rgba(34, 197, 94, 0.7), inset 1px 1px 2px rgba(255,255,255,0.4);
+  }
+
+  .led-amber-active {
+    background-color: #f59e0b;
+    box-shadow: 0 0 8px 1px rgba(245, 158, 11, 0.7), inset 1px 1px 2px rgba(255,255,255,0.4);
+  }
+
+  .led-red-active {
+    background-color: var(--color-accent);
+    box-shadow: 0 0 8px 1px rgba(255, 71, 87, 0.7), inset 1px 1px 2px rgba(255,255,255,0.4);
+  }
+
+  /* CRT Monitor Display screens */
+  .crt-screen {
+    background-color: #1a1a24;
+    border: 2px solid var(--color-border-dark);
+    box-shadow: inset 4px 4px 10px rgba(0,0,0,0.9), 2px 2px 4px var(--color-shadow-light);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* CRT Scanlines Overlay */
+  .crt-screen.crt-scanlines::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 2;
+    opacity: 0.45;
+  }
+
+  /* CRT Green/Amber Display Typography */
+  .crt-text-green {
+    font-family: var(--font-mono);
+    color: #4ade80;
+    text-shadow: 0 0 4px rgba(74, 222, 128, 0.5);
+  }
+  .crt-text-amber {
+    font-family: var(--font-mono);
+    color: #fbbf24;
+    text-shadow: 0 0 4px rgba(251, 191, 36, 0.5);
+  }
+}

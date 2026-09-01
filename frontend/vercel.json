@@ -1,0 +1,28 @@
+{
+  "rewrites": [
+    {
+      "source": "/auth/(.*)",
+      "destination": "http://13.61.144.146:8000/auth/$1"
+    },
+    {
+      "source": "/chat/(.*)",
+      "destination": "http://13.61.144.146:8000/chat/$1"
+    },
+    {
+      "source": "/chat",
+      "destination": "http://13.61.144.146:8000/chat"
+    },
+    {
+      "source": "/source/(.*)",
+      "destination": "http://13.61.144.146:8000/source/$1"
+    },
+    {
+      "source": "/source",
+      "destination": "http://13.61.144.146:8000/source"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

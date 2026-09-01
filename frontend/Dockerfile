@@ -14,9 +14,32 @@ FROM nginx:alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Custom nginx config for SPA routing (React Router)
+# Configure Nginx with SPA routing and reverse proxy for backend APIs
 RUN echo 'server { \
     listen 80; \
+    client_max_body_size 50M; \
+    \
+    location /auth { \
+        proxy_pass http://backend:8000; \
+        proxy_set_header Host $host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+    } \
+    \
+    location /chat { \
+        proxy_pass http://backend:8000; \
+        proxy_set_header Host $host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+    } \
+    \
+    location /source { \
+        proxy_pass http://backend:8000; \
+        proxy_set_header Host $host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+    } \
+    \
     location / { \
         root /usr/share/nginx/html; \
         index index.html index.htm; \
@@ -27,4 +50,3 @@ RUN echo 'server { \
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
-
